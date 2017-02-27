@@ -14,7 +14,14 @@ import net.minecraft.world.World;
  * Building API
  * 
  * Should be used by JS scripts. No other purpose rather than simplifying (i.e. 
- * wrapping) method calls in JS code. 
+ * wrapping) method calls in JS code.
+ * 
+ * This needed also for a reason because Minecraft is obfuscated, and you can't 
+ * really use its functions, because they have different method names compared 
+ * to names in development environment.
+ * 
+ * If you want to request more methods, feel free to do so in issues or pull 
+ * request it yourself right away (don't forget to test it, though)!
  */
 public class BuildAPI
 {
@@ -30,6 +37,14 @@ public class BuildAPI
     {
         this.server = server;
         this.sender = sender;
+    }
+
+    /**
+     * Get block position of the sender 
+     */
+    public BlockPos getPosition()
+    {
+        return this.sender.getPosition();
     }
 
     /* Blocks */
@@ -75,6 +90,22 @@ public class BuildAPI
         IBlockState state = block.getStateFromMeta(meta);
 
         world.setBlockState(new BlockPos(x, y, z), state);
+    }
+
+    /**
+     * Remove a block from sender's world 
+     */
+    public void removeBlock(int x, int y, int z)
+    {
+        this.removeBlock(this.sender.getEntityWorld(), false, x, y, z);
+    }
+
+    /**
+     * Remove a block from given world 
+     */
+    public void removeBlock(World world, boolean drop, int x, int y, int z)
+    {
+        world.destroyBlock(new BlockPos(x, y, z), drop);
     }
 
     /* Commands */
