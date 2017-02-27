@@ -1,0 +1,61 @@
+buildscript 
+{
+    repositories 
+    {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies 
+    {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "0.1"
+group = "mchorse.buildjs"
+archivesBaseName = "buildjs"
+
+sourceCompatibility = targetCompatibility = "1.6"
+
+compileJava 
+{
+    sourceCompatibility = targetCompatibility = "1.6"
+}
+
+minecraft 
+{
+    version = "1.11.2-13.20.0.2228"
+    runDir = "run"
+    
+    mappings = "snapshot_20161220"
+}
+
+dependencies 
+{
+    compile 'rhino:js:1.7R2'
+}
+
+processResources 
+{
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // Adds also minecraft version to mod's version
+    project.version += "-" + project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else except the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}

@@ -1,0 +1,9 @@
+#PARSE_ESCAPES
+
+buildjs.error.not_found=File %s wasn't found!
+buildjs.error.not_js=File %s isn't a JS file!
+buildjs.error.unknown=Unknown error happened during file reading:\n%s
+buildjs.error.eval_js=An error occurred during JavaScript evaluation:\n%s 
+buildjs.error.js=An error was raised during JavaScript execution:\n%s
+
+buildjs.commands.buildjs=Execute JS script.\n\n/buildjs <filename> [args...]
