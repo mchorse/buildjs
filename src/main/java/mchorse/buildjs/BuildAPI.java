@@ -42,9 +42,11 @@ public class BuildAPI
     /**
      * Get block position of the sender 
      */
-    public BlockPos getPosition()
+    public int[] getPosition()
     {
-        return this.sender.getPosition();
+        BlockPos pos = this.sender.getPosition();
+
+        return new int[] {pos.getX(), pos.getY(), pos.getZ()};
     }
 
     /* Blocks */
